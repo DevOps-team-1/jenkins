@@ -1,0 +1,38 @@
+pipeline {
+    agent { label 'slave-1' }
+    tools {
+        terraform 'terraform-11'
+    }
+    stages {
+        stage("Git checkout TF"){
+            steps{
+                git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/DevOps-team-1/terraform'
+            }
+        }
+        stage("Terraform init"){
+            steps{
+                sh 'terraform init'
+            }
+        }
+        stage("Terraform apply"){
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
+        }
+        stage("Git checkout"){
+            steps{
+                git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/DevOps-team-1/Ansible.git'
+            }
+        }
+        stage("install ansible dependencies"){
+            steps{
+                sh "ansible-galaxy collection install community.mysql"
+            }
+        }
+        stage("run playbook"){
+            steps{
+                ansiblePlaybook become: true, credentialsId: 'ansible', installation: 'ansible2', inventory: 'hosts', playbook: 'playbook.yaml'
+            }
+        }
+    }
+}
