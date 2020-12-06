@@ -1,0 +1,23 @@
+pipeline {
+    agent { label 'slave-1' }
+    tools {
+        terraform 'terraform-11'
+    }
+    stages {
+        stage("Git checkout TF"){
+            steps{
+                git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/DevOps-team-1/terraform'
+            }
+        }
+        stage("Terraform init"){
+            steps{
+                sh 'terraform init'
+            }
+        }
+        stage("Terraform apply"){
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
+        }
+    }
+}
