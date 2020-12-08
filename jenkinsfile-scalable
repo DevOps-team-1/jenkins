@@ -6,7 +6,7 @@ pipeline {
     stages {
 	stage("telegram notification start"){
             steps{
-		sh 'curl -s -X POST https://api.telegram.org/bot1445025092:AAE6dLnDBTxfa0IqSlqjNhk8Pqkx9F3cIwI/sendMessage -d chat_id=-423215212 -d text="Start jenkins-scalable"'
+		sh 'curl -s -X POST https://api.telegram.org/bot1445025092:AAE6dLnDBTxfa0IqSlqjNhk8Pqkx9F3cIwI/sendMessage -d chat_id=-423215212 -d text="<<<--------------Start jenkins-scalable--------------->>"'
             }
         }   
         stage("Git checkout TF"){
@@ -31,7 +31,7 @@ pipeline {
         }
 	stage("telegram notification finish"){
             steps{
-                sh 'curl -s -X POST https://api.telegram.org/bot1445025092:AAE6dLnDBTxfa0IqSlqjNhk8Pqkx9F3cIwI/sendMessage -d chat_id=-423215212 -d text="Finish jenkins-scalable"'
+                sh 'curl -s -X POST https://api.telegram.org/bot1445025092:AAE6dLnDBTxfa0IqSlqjNhk8Pqkx9F3cIwI/sendMessage -d chat_id=-423215212 -d text="<<<--------------Finish jenkins-scalable--------------->>"'
 	    }
 	}
     }
