@@ -4,6 +4,11 @@ pipeline {
         terraform 'terraform-11'
     }
     stages {
+	stage("telegram notification start"){
+            steps{
+		curl -s -X POST https://api.telegram.org/bot1445025092:AAE6dLnDBTxfa0IqSlqjNhk8Pqkx9F3cIwI/sendMessage -d chat_id=-423215212 -d text="Start jenkins-scalable"
+            }
+        }   
         stage("Git checkout TF"){
             steps{
                 git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/DevOps-team-1/terraform-scalable.git'
@@ -24,5 +29,10 @@ pipeline {
                 sh 'terraform apply --auto-approve'
             }
         }
+	stage("telegram notification finish"){
+            steps{
+                curl -s -X POST https://api.telegram.org/bot1445025092:AAE6dLnDBTxfa0IqSlqjNhk8Pqkx9F3cIwI/sendMessage -d chat_id=-423215212 -d text="finish jenkins-scalable"
+	    }
+	}
     }
 }
